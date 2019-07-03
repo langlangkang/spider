@@ -7,3 +7,14 @@
 需要安装第三方库有：numpy，pandas，pyecharts，jieba，wordcloud，aip，pygame，bs4，requests
 具体安装方法：pip install numpy 等等
 运行结束，可选择性运行 del_huancun.py 来清理缓存
+
+执行步骤：
+1. main.py 主函数
+2. yuyin.py 播放语音
+3. html_downloader.py 访问页面内容
+4. url_manager.py 管理url地址函数
+5. html_parser.py 解析页面函数
+6. data_analyse.py 数据清洗分析
+7. data_picture_pie.py 数据可视化pie图
+8. data_picture.py 数据可视化图片
+9. del_huancun.py 清理缓存数据
