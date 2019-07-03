@@ -1,0 +1,9 @@
+---------------------------------------使用须知------------------------------------------
+
+系统环境：Windows7 
+开发环境：pycharm 
+解析器：python3.5
+使文件都处于同一级目录下，不然调用会失败
+需要安装第三方库有：numpy，pandas，pyecharts，jieba，wordcloud，aip，pygame，bs4，requests
+具体安装方法：pip install numpy 等等
+运行结束，可选择性运行 del_huancun.py 来清理缓存
