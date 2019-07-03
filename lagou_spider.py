@@ -13,13 +13,18 @@ from selenium.webdriver.common.by import By
 
 class Lagouspider(object):
     def __init__(self):
-        self.driver=webdriver.Chrome()
+        self.chromepath=r'C:\Users\my\AppData\Local\360Chrome\Chrome\Application\chromedriver.exe'
+        self.driver=webdriver.Chrome(executable_path=self.chromepath)
+        #起始页，自己修改，就从这里开始爬取
         #self.url='https://www.lagou.com/jobs/list_python?labelWords=&fromSearch=true&suginput='
         #self.url='https://www.lagou.com/jobs/list_python%20web?px=default&city=%E5%B9%BF%E5%B7%9E#filterBox'
         self.url='https://www.lagou.com/jobs/list_python%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90?oquery=python%20web&fromSearch=true&labelWords=relative&city=%E5%B9%BF%E5%B7%9E'
         self.popsitions=[]
 
     def run(self):
+        '''
+        主程序
+        '''
         self.driver.get(self.url)
         while True:
             source = self.driver.page_source
@@ -39,6 +44,9 @@ class Lagouspider(object):
             time.sleep(5)
 
     def parse_list_page(self,source):
+        '''
+        解析起始页的架构，得到每个职位的详情信息的链接
+        '''
         html=etree.HTML(source)
         links=html.xpath("//a[@class='position_link']/@href")
         for link in links:
@@ -46,6 +54,9 @@ class Lagouspider(object):
             time.sleep(5)
 
     def request_detail_page(self,url):
+        '''
+        通过打开第二个窗口，请求详情页面
+        '''
         try:
             self.driver.execute_script('window.open("%s")' % url)  # 新建一个窗口打开详情页
             time.sleep(4)
@@ -70,6 +81,9 @@ class Lagouspider(object):
             self.driver.switch_to.window(self.driver.window_handles[0])  # 跳转到第一个窗口
 
     def parse_datail_page(self,source):
+        '''
+        解析详情页面
+        '''
         html=etree.HTML(source)
         position_name=html.xpath("//span[@class='name']/text()")[0]  #工作名字
         job_request_spans=html.xpath("//dd[@class='job_request']//span")
@@ -95,9 +109,13 @@ class Lagouspider(object):
         print('=' * 50)
         print('保存成功==========',position)
         #print(self.popsitions)
-        pd.DataFrame(self.popsitions).to_csv('python_analy_data.csv',index=False,sep=',')
+        #快速直接保存
+        #pd.DataFrame(self.popsitions).to_csv('python_analy_data.csv',index=False,sep=',')
 
     def save_datail_page_data(self):
+        '''
+        这里是保存功能，可用csv库或pandas库自行保存
+        '''
         pass
 
 if __name__ == '__main__':
